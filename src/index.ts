@@ -65,6 +65,9 @@ export {
   normalizeFilePath,
 } from "./utils/git";
 
+// Validation
+export { validateCommand } from "./commands/validate";
+
 // Stubs for future features
 export async function curate(): Promise<void> {
   throw new Error("curate: Not yet implemented. Will allow bulk decision management.");
@@ -72,8 +75,4 @@ export async function curate(): Promise<void> {
 
 export async function generateBeads(_decisionId: string): Promise<string[]> {
   throw new Error("generateBeads: Not yet implemented. Will extract key concepts from decisions.");
-}
-
-export async function validate(): Promise<{ valid: boolean; issues: string[] }> {
-  throw new Error("validate: Not yet implemented. Will check file/symbol references and decision integrity.");
 }

@@ -6,6 +6,7 @@ import { whyCommand } from "./commands/why";
 import { supersedeCommand } from "./commands/supersede";
 import { contextCommand } from "./commands/context";
 import { searchCommand } from "./commands/search";
+import { validateCommand } from "./commands/validate";
 
 const program = new Command();
 
@@ -19,5 +20,6 @@ program.addCommand(whyCommand);
 program.addCommand(supersedeCommand);
 program.addCommand(contextCommand);
 program.addCommand(searchCommand);
+program.addCommand(validateCommand);
 
 program.parse();
