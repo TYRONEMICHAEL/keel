@@ -7,6 +7,8 @@ import { supersedeCommand } from "./commands/supersede";
 import { contextCommand } from "./commands/context";
 import { searchCommand } from "./commands/search";
 import { validateCommand } from "./commands/validate";
+import { curateCommand } from "./commands/curate";
+import { generateBeadsCommand } from "./commands/generate-beads";
 
 const program = new Command();
 
@@ -21,5 +23,7 @@ program.addCommand(supersedeCommand);
 program.addCommand(contextCommand);
 program.addCommand(searchCommand);
 program.addCommand(validateCommand);
+program.addCommand(curateCommand);
+program.addCommand(generateBeadsCommand);
 
 program.parse();

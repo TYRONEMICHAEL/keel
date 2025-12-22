@@ -2,7 +2,9 @@
 
 > The structural foundation that keeps you stable when things get rough.
 
-**Git-native decision ledger** for agents and humans. Captures the "why" behind changes so you can act with confidence instead of guessing.
+**Git-native decision ledger for coding agents.** Captures the "why" behind changes so agents can act with confidence instead of guessing.
+
+Built to be called by LLM-based coding agents (Claude, GPT, Codex, etc). Keel provides the data and storage - your agent does the thinking.
 
 ## Why Keel?
 
@@ -52,6 +54,8 @@ bun run src/cli.ts search "database"
 | `supersede <id>` | Replace a decision with a new one |
 | `context <path>` | Get decisions affecting a file |
 | `search [query]` | Full-text search across decisions |
+| `validate` | Check that file references still exist |
+| `curate` | Get decisions ready for summarization |
 
 ### decide
 
@@ -155,6 +159,42 @@ await appendDecision({
 // Query decisions for a file
 const db = openIndex();
 const decisions = queryByFile(db, "src/auth/oauth.ts");
+```
+
+## Agent Workflow: Curate
+
+Over time you accumulate many decisions. Use `curate` to compress them:
+
+```bash
+# Get decisions older than 30 days, formatted for agent summarization
+keel curate --older-than 30
+
+# Filter by type or file pattern
+keel curate --type constraint
+keel curate --file-pattern "src/auth/*"
+```
+
+The output is formatted for an LLM to summarize. Your agent then:
+1. Calls `curate` to get candidates
+2. Summarizes them (agent's job)
+3. Calls `createSummary()` via SDK to store the summary
+4. Calls `markCurated()` to exclude originals from future context
+
+```typescript
+import { getCurationCandidates, createSummary, markCurated } from "keel";
+
+// Get candidates
+const candidates = getCurationCandidates(db, { olderThan: thirtyDaysAgo });
+
+// Agent summarizes...
+const summary = await agent.summarize(candidates);
+
+// Store summary and mark originals
+const summaryDecision = await createSummary({
+  summarizes: candidates.map(c => c.decision.id),
+  summary: summary,
+});
+await markCurated(candidates.map(c => c.decision.id), summaryDecision.id);
 ```
 
 ## Beads Integration

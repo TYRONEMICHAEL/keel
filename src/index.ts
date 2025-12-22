@@ -68,11 +68,15 @@ export {
 // Validation
 export { validateCommand } from "./commands/validate";
 
-// Stubs for future features
-export async function curate(): Promise<void> {
-  throw new Error("curate: Not yet implemented. Will allow bulk decision management.");
-}
+// Curation
+export {
+  getCurationCandidates,
+  groupByFilePattern,
+  createSummary,
+  markCurated,
+  formatForAgent,
+} from "./core/curate";
+export { curateCommand } from "./commands/curate";
 
-export async function generateBeads(_decisionId: string): Promise<string[]> {
-  throw new Error("generateBeads: Not yet implemented. Will extract key concepts from decisions.");
-}
+// Generate Beads
+export { generateBeadsCommand } from "./commands/generate-beads";
