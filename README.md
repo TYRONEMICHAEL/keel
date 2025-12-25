@@ -90,6 +90,7 @@ keel supersede DEC-a1b2 \
 ```bash
 keel context src/auth/oauth.ts
 keel context --json src/auth/oauth.ts
+keel context --bead keel-abc    # Get decisions linked to a Beads issue/epic
 ```
 
 ### search

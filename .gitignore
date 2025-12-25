@@ -2,7 +2,7 @@
 node_modules/
 
 # Build output
-keel
+/build/
 dist/
 
 # Keel SQLite index (derived from JSONL, should not be committed)
