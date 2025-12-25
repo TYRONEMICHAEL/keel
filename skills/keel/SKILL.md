@@ -121,6 +121,26 @@ keel decide \
   --files "src/middleware/rateLimit.ts,src/config/limits.ts"
 ```
 
+#### Decision with External References
+
+Link decisions to external systems (Beads, Jira, GitHub Issues, etc.):
+
+```bash
+keel decide \
+  --type product \
+  --problem "Tried approach X for caching" \
+  --choice "Abandoned in favor of Redis" \
+  --rationale "In-memory cache caused OOM under load" \
+  --refs "bd-auth-123,JIRA-456" \
+  --agent
+```
+
+Query decisions by reference:
+
+```bash
+keel context --ref bd-auth-123
+```
+
 #### Agent-Made Decision
 
 ```bash
@@ -184,6 +204,7 @@ Before ending session:
 | `keel init` | Initialize keel (humans only) | `keel init` |
 | `keel decide` | Record a new decision | `keel decide --type product --problem "..." --choice "..."` |
 | `keel context <path>` | Get decisions for a file | `keel context src/auth/oauth.ts` |
+| `keel context --ref <id>` | Get decisions for a reference | `keel context --ref bd-auth-123` |
 | `keel why <id>` | Show full decision details | `keel why DEC-a1b2` |
 | `keel search <query>` | Full-text search | `keel search "authentication"` |
 | `keel search --type <type>` | Filter by type | `keel search --type constraint` |
