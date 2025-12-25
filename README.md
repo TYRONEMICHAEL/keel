@@ -6,16 +6,28 @@
 
 ## Quickstart
 
+**1. Install**
+
 ```bash
-# 1. Install
 curl -fsSL https://raw.githubusercontent.com/TYRONEMICHAEL/keel/main/scripts/install.sh | bash
+```
 
-# 2. Initialize in your repo (humans do this once)
-cd your-project
+**2. Initialize in your repo** (humans do this once)
+
+```bash
 keel init
+```
 
-# 3. Tell your AI agent about Keel
+**3. Tell your AI agent about Keel**
+
+```bash
 echo "Use 'keel' for decision tracking. Run 'keel context <file>' before editing." >> CLAUDE.md
+```
+
+**Upgrade**
+
+```bash
+keel upgrade
 ```
 
 ## Essential Commands
