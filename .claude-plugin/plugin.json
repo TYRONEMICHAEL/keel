@@ -1,0 +1,13 @@
+{
+  "name": "keel",
+  "description": "Decision memory for AI agents. Records architectural choices, constraints, and learnings in a queryable git-native ledger.",
+  "version": "0.2.0",
+  "author": {
+    "name": "Tyrone Avnit"
+  },
+  "homepage": "https://github.com/TYRONEMICHAEL/keel",
+  "repository": "https://github.com/TYRONEMICHAEL/keel",
+  "license": "MIT",
+  "keywords": ["decisions", "memory", "architecture", "rationale", "agents"],
+  "skills": "./skills/"
+}

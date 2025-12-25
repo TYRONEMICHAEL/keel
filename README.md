@@ -18,7 +18,13 @@ curl -fsSL https://raw.githubusercontent.com/TYRONEMICHAEL/keel/main/scripts/ins
 keel init
 ```
 
-**3. Tell your AI agent about Keel**
+**3. Install Claude Code plugin** (optional - for automatic skill loading)
+
+```bash
+claude plugin install --path /path/to/keel
+```
+
+Or manually tell your agent:
 
 ```bash
 echo "Use 'keel' for decision tracking. Run 'keel context <file>' before editing." >> CLAUDE.md
