@@ -47,8 +47,12 @@ mkdir -p "$INSTALL_DIR"
 curl -fsSL "$URL" -o "$INSTALL_DIR/$BINARY"
 chmod +x "$INSTALL_DIR/$BINARY"
 
+# Create 'ke' alias
+ln -sf "$INSTALL_DIR/$BINARY" "$INSTALL_DIR/ke"
+
 echo ""
 echo "Installed keel to $INSTALL_DIR/$BINARY"
+echo "Created alias: ke -> keel"
 echo ""
 
 # Check if in PATH
