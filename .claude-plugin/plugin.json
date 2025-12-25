@@ -8,6 +8,17 @@
   "homepage": "https://github.com/TYRONEMICHAEL/keel",
   "repository": "https://github.com/TYRONEMICHAEL/keel",
   "license": "MIT",
-  "keywords": ["decisions", "memory", "architecture", "rationale", "agents"],
-  "skills": "./skills/"
+  "keywords": ["decisions", "memory", "architecture", "rationale", "agents", "context"],
+  "skills": "./skills/",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": {},
+        "hook": {
+          "type": "command",
+          "command": "keel search --type constraint --json 2>/dev/null || true"
+        }
+      }
+    ]
+  }
 }
