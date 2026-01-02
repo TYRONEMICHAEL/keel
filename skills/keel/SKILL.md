@@ -1,6 +1,6 @@
 ---
 name: keel
-description: "Decision memory for AI agents. BEFORE PLANNING ANY FEATURE: Run `keel sql \"SELECT id, problem, choice FROM decisions WHERE status = 'active'\"` to check for conflicts. If your plan conflicts with an existing decision, STOP and inform the user. After making choices, run 'keel decide' to record them."
+description: "Decision memory for AI agents. Before building or planning any feature, invoke this skill and check for existing decisions that might conflict. Decisions are constraints - if your plan conflicts, STOP and ask."
 allowed-tools: "Read,Bash(keel:*)"
 version: "0.1.0"
 author: "Tyrone Avnit"
