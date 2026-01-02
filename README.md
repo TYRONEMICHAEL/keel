@@ -42,8 +42,9 @@ keel upgrade
 |---------|---------|
 | `keel decide --type product --problem "..." --choice "..."` | Record a decision |
 | `keel context <file>` | Get decisions affecting a file |
-| `keel search "query"` | Full-text search |
+| `keel sql "SELECT ..."` | Query decisions with SQL |
 | `keel why DEC-xxxx` | Show decision details |
+| `keel graph` | Output decision graph as Mermaid |
 
 ## Why Keel?
 
@@ -63,7 +64,7 @@ Record a new decision:
 
 ```bash
 keel decide \
-  --type product \           # product, process, constraint, learning
+  --type product \           # product, process, constraint
   --problem "..." \          # What problem this addresses
   --choice "..." \           # What was decided
   --rationale "..." \        # Why this choice (optional)
@@ -82,14 +83,14 @@ keel context --ref bd-abc      # Query by Beads issue, Jira ticket, etc.
 keel context --json src/auth/oauth.ts
 ```
 
-### search
+### sql
 
-Full-text search across decisions:
+Query decisions with raw SQL:
 
 ```bash
-keel search "authentication"
-keel search --type constraint
-keel search --status active
+keel sql "SELECT raw_json FROM decisions WHERE status = 'active'"
+keel sql "SELECT * FROM decisions WHERE type = 'constraint'"
+keel sql "SELECT raw_json FROM decisions WHERE problem LIKE '%auth%'"
 ```
 
 ### why
@@ -111,14 +112,24 @@ keel supersede DEC-a1b2 \
   --choice "New choice"
 ```
 
+### graph
+
+Output decision relationships as Mermaid diagram:
+
+```bash
+keel graph              # Decisions with supersession chains and bead links
+keel graph --files      # Also include file associations
+```
+
+Output can be pasted into any Mermaid viewer (GitHub, Notion, mermaid.live).
+
 ## Decision Types
 
 | Type | When to Use | Example |
 |------|-------------|---------|
-| `product` | Business logic, features, limits | "Free plan = 5 users" |
+| `product` | Business logic, features, architecture | "Free plan = 5 users" |
 | `process` | How we work, patterns, style | "Use functional style, not OOP" |
 | `constraint` | Hard limits, requirements | "Must support IE11" |
-| `learning` | Failed approaches, discoveries | "Approach X failed because Y" |
 
 ## Architecture
 
@@ -128,7 +139,7 @@ keel supersede DEC-a1b2 \
 └── index.sqlite      # Derived index (gitignored)
 ```
 
-**JSONL** is append-only and git-native. **SQLite** provides indexed queries and FTS5 search. The index rebuilds automatically when the JSONL changes.
+**JSONL** is append-only and git-native. **SQLite** provides indexed queries. The index rebuilds automatically when the JSONL changes.
 
 ### Decision Format
 

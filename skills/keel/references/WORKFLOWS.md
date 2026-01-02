@@ -42,11 +42,11 @@ keel context --ref bd-auth-123
 
 Shows all decisions linked to that issue/epic.
 
-### 3. Search for Related Decisions
+### 3. Query Related Decisions
 
 ```bash
-keel search "authentication"
-keel search --type constraint
+keel sql "SELECT raw_json FROM decisions WHERE problem LIKE '%auth%' OR choice LIKE '%auth%'"
+keel sql "SELECT raw_json FROM decisions WHERE type = 'constraint' AND status = 'active'"
 ```
 
 ## Recording Decisions
@@ -59,14 +59,13 @@ Ask yourself:
 - "Would a future agent wonder why this is like this?" → **YES** = record
 - "Did I choose between multiple valid approaches?" → **YES** = record
 - "Is there a limit, constraint, or requirement here?" → **YES** = record
-- "Did something fail that we shouldn't try again?" → **YES** = record
 - "Is this just an implementation detail?" → **NO** = don't record
 
 ### Recording Pattern
 
 ```bash
 keel decide \
-  --type <product|process|constraint|learning> \
+  --type <product|process|constraint> \
   --problem "What problem/question/requirement" \
   --choice "What we decided" \
   --rationale "Why we decided this" \
@@ -85,7 +84,6 @@ Ask yourself:
 - Did I choose approaches?
 - Did I set limits?
 - Did I pick patterns?
-- Did I learn something the hard way?
 
 ### 2. Record Any Unrecorded Decisions
 

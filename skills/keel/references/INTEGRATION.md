@@ -49,7 +49,7 @@ keel context --ref PROJ-456
 
 ```bash
 keel decide \
-  --type learning \
+  --type product \
   --problem "Tried WebSockets for notifications" \
   --choice "Switched to SSE - simpler for our use case" \
   --refs "gh-123"
@@ -83,7 +83,7 @@ All commands support `--json` for programmatic use:
 
 ```bash
 keel context --json src/auth.ts
-keel search --json "authentication"
+keel sql "SELECT raw_json FROM decisions WHERE problem LIKE '%auth%'" --json
 keel why --json DEC-a1b2
 keel curate --json --older-than 30
 ```
@@ -94,26 +94,26 @@ keel curate --json --older-than 30
 
 ```yaml
 # .github/workflows/keel.yml
-name: Validate Decisions
+name: Check Constraints
 on: [pull_request]
 jobs:
-  validate:
+  constraints:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: |
           curl -fsSL https://raw.githubusercontent.com/TYRONEMICHAEL/keel/main/scripts/install.sh | bash
-          keel validate
+          keel sql "SELECT raw_json FROM decisions WHERE type = 'constraint'" --json
 ```
 
 ### Audit Decisions in CI
 
 ```bash
 # List all constraints
-keel search --type constraint --json
+keel sql "SELECT raw_json FROM decisions WHERE type = 'constraint'" --json
 
-# Check for broken file references
-keel validate
+# List recent decisions
+keel sql "SELECT raw_json FROM decisions ORDER BY created_at DESC LIMIT 20" --json
 ```
 
 ## IDE Integration
@@ -141,6 +141,5 @@ Add to `.vscode/tasks.json`:
 # Add to ~/.bashrc or ~/.zshrc
 alias kd='keel decide'
 alias kc='keel context'
-alias ks='keel search'
 alias kw='keel why'
 ```

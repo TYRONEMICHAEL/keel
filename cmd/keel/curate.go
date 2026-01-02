@@ -28,7 +28,7 @@ var (
 
 func init() {
 	curateCmd.Flags().IntVar(&curateOlderThan, "older-than", 0, "Only include decisions older than N days")
-	curateCmd.Flags().StringVarP(&curateType, "type", "t", "", "Filter by type: product, process, constraint, learning")
+	curateCmd.Flags().StringVarP(&curateType, "type", "t", "", "Filter by type: product, process, constraint")
 	curateCmd.Flags().StringVarP(&curateFilePattern, "file-pattern", "f", "", "Filter by file pattern (e.g., 'src/auth/*')")
 	curateCmd.Flags().BoolVar(&curateJSON, "json", false, "Output as JSON")
 	rootCmd.AddCommand(curateCmd)

@@ -121,7 +121,6 @@ func colorType(t string) string {
 		"product":    "\033[34m",
 		"process":    "\033[35m",
 		"constraint": "\033[31m",
-		"learning":   "\033[36m",
 	}
 	color := colors[t]
 	if color == "" {

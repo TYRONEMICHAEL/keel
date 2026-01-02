@@ -20,8 +20,7 @@ var decideCmd = &cobra.Command{
 Decision types:
   product    - Business logic decisions (e.g., "Free plan = 5 users")
   process    - How-to-work decisions (e.g., "Use functional style")
-  constraint - Hard limits and requirements (e.g., "Must support IE11")
-  learning   - What we discovered (e.g., "Approach X failed because Y")`,
+  constraint - Hard limits and requirements (e.g., "Must support IE11")`,
 	RunE: runDecide,
 }
 
@@ -38,7 +37,7 @@ var (
 )
 
 func init() {
-	decideCmd.Flags().StringVarP(&decideType, "type", "t", "", "Decision type: product, process, constraint, learning (required)")
+	decideCmd.Flags().StringVarP(&decideType, "type", "t", "", "Decision type: product, process, constraint (required)")
 	decideCmd.Flags().StringVar(&decideProblem, "problem", "", "What problem this addresses (required)")
 	decideCmd.Flags().StringVar(&decideChoice, "choice", "", "What was decided (required)")
 	decideCmd.Flags().StringVar(&decideRationale, "rationale", "", "Why this choice was made")
@@ -65,7 +64,7 @@ func runDecide(cmd *cobra.Command, args []string) error {
 
 	// Validate type
 	if !types.IsValidType(decideType) {
-		return fmt.Errorf("invalid type: %s. Must be one of: product, process, constraint, learning", decideType)
+		return fmt.Errorf("invalid type: %s. Must be one of: product, process, constraint", decideType)
 	}
 
 	// Build input

@@ -21,7 +21,7 @@ Git-native decision ledger that captures the "why" behind code changes. Provides
 - 🔍 **Context Queries**: Ask "why is this file like this?" and get answers
 - 📊 **Constraint Awareness**: Always know what hard limits apply
 - 🐙 **Git Integration**: Decisions versioned in `.keel/decisions.jsonl`
-- ⚡ **Fast Search**: SQLite index with FTS5 full-text search
+- ⚡ **Fast Queries**: SQLite index with raw SQL access
 
 **When to Record a Decision**:
 - ❓ "Would a future agent wonder why this is like this?" → **YES** = record
@@ -240,7 +240,7 @@ File paths in decisions are historical - they show where code was when the decis
 
 1. **Check for affected decisions:**
 ```bash
-keel search "<old-filename>"
+keel sql "SELECT * FROM decisions WHERE raw_json LIKE '%<old-filename>%'"
 ```
 
 2. **If critical decisions exist**, supersede with updated paths:
@@ -253,7 +253,7 @@ keel supersede DEC-xxx \
 
 3. **If just historical context**, leave as-is - the decision content is what matters.
 
-**Note:** File refs are optional context, not the primary way to find decisions. Use `keel search` to find decisions by content.
+**Note:** File refs are optional context, not the primary way to find decisions. Use `keel sql` to find decisions by content.
 
 ---
 
@@ -370,7 +370,7 @@ keel sql "SELECT d.raw_json FROM decisions d JOIN decision_files df ON d.id = df
 | Error | Cause | Solution |
 |-------|-------|----------|
 | "Keel not initialized" | keel init not run | Run `keel init` (humans do this, not agents) |
-| "Decision not found" | ID doesn't exist or typo | Use `keel search` to find correct ID |
+| "Decision not found" | ID doesn't exist or typo | Use `keel sql` to find correct ID |
 | "Not a git repository" | keel needs git context | Run from within a git repo |
 | "No decisions found" | New repo or no matches | This is fine - start recording decisions |
 
@@ -435,7 +435,7 @@ When joining an existing codebase, use the onboarding protocol to extract implic
 
 **How it works:**
 1. Analyze codebase structure
-2. Check existing decisions: `keel search --type product`
+2. Check existing decisions: `keel sql "SELECT * FROM decisions WHERE type = 'product'"`
 3. Interview user about the "why" behind choices
 4. Group related answers into coherent decisions
 5. Batch record with `keel decide`
