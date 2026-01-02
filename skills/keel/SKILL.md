@@ -69,6 +69,8 @@ Scan for:
 
 **If your plan conflicts with an existing decision: STOP and inform the user.**
 
+**If there are more than 50 active decisions:** Suggest running `keel curate --older-than 30` to consolidate old decisions into summaries.
+
 #### Step 1: Check Context for Files You'll Touch
 
 ```bash
