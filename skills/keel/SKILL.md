@@ -1,6 +1,6 @@
 ---
 name: keel
-description: "Decision memory for AI agents. You are stateless - check .keel/ decisions BEFORE implementing anything. Run 'keel sql' to query decisions. If your plan conflicts with a decision, STOP and ask approval. After making choices, run 'keel decide' to record them."
+description: "Decision memory for AI agents. BEFORE PLANNING ANY FEATURE: Run `keel sql \"SELECT id, problem, choice FROM decisions WHERE status = 'active'\"` to check for conflicts. If your plan conflicts with an existing decision, STOP and inform the user. After making choices, run 'keel decide' to record them."
 allowed-tools: "Read,Bash(keel:*)"
 version: "0.1.0"
 author: "Tyrone Avnit"
@@ -54,6 +54,20 @@ keel init  # Creates .keel/ directory with empty ledger
 ### Session Start Protocol
 
 **Every session, before changing code:**
+
+#### Step 0: Check ALL Active Decisions (REQUIRED)
+
+Before planning any feature or making changes, query all active decisions:
+
+```bash
+keel sql "SELECT id, type, problem, choice FROM decisions WHERE status = 'active'"
+```
+
+Scan for:
+- **Constraints** (`type = 'constraint'`) - hard rules you MUST follow
+- **Decisions that conflict** with your planned approach
+
+**If your plan conflicts with an existing decision: STOP and inform the user.**
 
 #### Step 1: Check Context for Files You'll Touch
 
